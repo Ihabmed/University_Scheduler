@@ -18,7 +18,7 @@ def organizer(path):
     groupesEmp = []
 
     for groupe in groupes:
-        df = emp.loc[(emp['Groupe'] == groupe) | (emp['Groupe'] == "Promo")]
+        df = emp.loc[(emp['Groupe'].str.contains(groupe)) | ((emp['Groupe'] == "Promo") | (emp['Groupe'] == "Sec"))]
         fig, ax =plt.subplots(figsize=(12,4))
         ax.axis('tight')
         ax.axis('off')
@@ -33,5 +33,4 @@ def organizer(path):
 organizer('Emplois du temps.csv')
 
 
-# test = read_pdf("groupe1.pdf", pages=number)
 
