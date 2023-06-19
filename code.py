@@ -1,9 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
-import re
 import tabula
-from functools import reduce
 import os
 
 
@@ -18,16 +16,12 @@ def organizer(path):
 
     groupes = groupes.tolist()
     
-    regex = re.compile(r"[a-zA-Z]+")
-
     groupes = list(filter(lambda e: len(e)==1, groupes))
 
-    pwd = os.getcwd()
-
-    dirpath = os.path.join(pwd, path.split(".")[0])
-
-    os.mkdir(dirpath)
-    
+    if not os.path.isdir(path.split(".")[0]):
+        pwd = os.getcwd()
+        dirpath = os.path.join(pwd, path.split(".")[0])
+        os.mkdir(dirpath)
 
     for groupe in groupes:
         df = emp.loc[(emp['Groupe'].str.contains(groupe)) | (emp['Groupe'] == "Promo") | (emp['Groupe'] == "Sec") | (emp['Groupe'] == "sec")]
@@ -39,9 +33,11 @@ def organizer(path):
         pp.savefig(fig, bbox_inches='tight')
         pp.close()
 
+    os.remove('output.csv')
 
 
-organizer('math.pdf')
+
+organizer('mi.pdf')
 
 
 
