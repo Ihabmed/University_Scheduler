@@ -2,13 +2,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import re
+import tabula
+from functools import reduce
+import os
 
 
 def organizer(path):
 
-    emp = pd.read_csv(path)
+    tabula.convert_into(path, "output.csv", output_format="csv", pages='all')
 
-    emp.columns = ["Journée", "Heure", "Module", "Type", "Enseignant", "Salle", "Promotion", "specialité", "Groupe", "Nature"]
+    # emp.columns = ["Journée", "Heure", "Module", "Type", "Enseignant", "Salle", "Promotion", "specialité", "Groupe", "Nature"]
+    emp = pd.read_csv("output.csv")
 
     groupes = emp["Groupe"].unique()
 
@@ -18,7 +22,12 @@ def organizer(path):
 
     groupes = list(filter(lambda e: len(e)==1, groupes))
 
-    print(groupes)
+    pwd = os.getcwd()
+
+    dirpath = os.path.join(pwd, path.split(".")[0])
+
+    os.mkdir(dirpath)
+    
 
     for groupe in groupes:
         df = emp.loc[(emp['Groupe'].str.contains(groupe)) | (emp['Groupe'] == "Promo") | (emp['Groupe'] == "Sec") | (emp['Groupe'] == "sec")]
@@ -26,13 +35,15 @@ def organizer(path):
         ax.axis('tight')
         ax.axis('off')
         the_table = ax.table(cellText=df.values,colLabels=df.columns,loc='center')
-        pp = PdfPages(f"groupe{groupe}.pdf")
+        pp = PdfPages(f"{path.split('.')[0]}/groupe{groupe}.pdf")
         pp.savefig(fig, bbox_inches='tight')
         pp.close()
 
 
 
-organizer('Emp1erS2.csv')
+organizer('math.pdf')
+
+
 
 
 
