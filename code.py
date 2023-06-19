@@ -16,9 +16,8 @@ def organizer(path):
     
     regex = re.compile(r"[a-zA-Z]+")
 
-    for groupe in groupes:
-        if(regex.match(groupe)):
-            groupes.remove(groupe)
+    groupes = list(filter(lambda e: len(e)==1, groupes))
+
     print(groupes)
 
     for groupe in groupes:
