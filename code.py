@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
+import re
 
 
 def organizer(path):
@@ -12,13 +13,15 @@ def organizer(path):
     groupes = emp["Groupe"].unique()
 
     groupes = groupes.tolist()
-    groupes.remove("Promo")
     
+    regex = re.compile(r"[a-zA-Z]+")
 
-    groupesEmp = []
+    groupes = list(filter(lambda e: len(e)==1, groupes))
+
+    print(groupes)
 
     for groupe in groupes:
-        df = emp.loc[(emp['Groupe'].str.contains(groupe)) | ((emp['Groupe'] == "Promo") | (emp['Groupe'] == "Sec"))]
+        df = emp.loc[(emp['Groupe'].str.contains(groupe)) | (emp['Groupe'] == "Promo") | (emp['Groupe'] == "Sec") | (emp['Groupe'] == "sec")]
         fig, ax =plt.subplots(figsize=(12,4))
         ax.axis('tight')
         ax.axis('off')
@@ -27,10 +30,9 @@ def organizer(path):
         pp.savefig(fig, bbox_inches='tight')
         pp.close()
 
-    print(groupesEmp)
 
 
-organizer('Emplois du temps.csv')
+organizer('Emp1erS2.csv')
 
 
 
