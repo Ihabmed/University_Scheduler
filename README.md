@@ -15,8 +15,14 @@ This project is built using python programming languages as some packages such a
 
 If you want to work with the project make sure to install ***requirements.txt*** by running commands in your terminal/cmdline:
 
-  * using cmdline (windows): ```sh pip install -r requirements.txt ```
-  * using terminal (linux): ```sh pip3 install -r requirements.txt ```
+  * using cmdline (windows):
+       ```sh
+            pip install -r requirements.txt
+       ```
+  * using terminal (linux):
+       ```sh
+            pip3 install -r requirements.txt
+       ```
 
 ## Reach us
 
