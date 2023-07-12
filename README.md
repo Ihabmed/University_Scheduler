@@ -1,6 +1,6 @@
 # University_Scheduler Project
 
-This project is an attempt to transform a university schedule from a static table to data structure.
+This project is an attempt to transform a university schedule from a global shedule to local shedule specific to each group.
 
 ## Technologies reference
 
