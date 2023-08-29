@@ -2,6 +2,7 @@ import tkinter
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
+import matplotlib
 import tabula
 import os
 from tkinter import *
@@ -30,7 +31,7 @@ def group_orginizer(dest, emp):
 
     for groupe in grp:
         df = emp.loc[(emp['Groupe'].isin(groupe))]
-        fig, ax =plt.subplots(figsize=(12,4))
+        fig, ax = plt.subplots(figsize=(12,4))
         ax.axis('tight')
         ax.axis('off')
         the_table = ax.table(cellText=df.values,colLabels=df.columns,loc='center')
@@ -45,6 +46,7 @@ def organizer(path, dest):
     emp = emp.drop(columns=['Nature'])
     speciality = emp["Spésialité"].unique()
     speciality = speciality.tolist()
+    tabs = []
     if len(speciality) > 1:
         spec = []
         for i in range(len(speciality)):
@@ -59,6 +61,7 @@ def organizer(path, dest):
         for s in spec:
             df = emp.loc[emp["Spésialité"].isin(s)]
             p = os.path.join(dest, s[0])
+            tabs.append(p)
             if not os.path.exists(p):
                 os.mkdir(p)
             else:
@@ -69,6 +72,7 @@ def organizer(path, dest):
             os.remove(f"{p}/output1.csv")
     else:
         p = dest + "/" + os.path.basename(path).split(".")[0]
+        tabs.append(p)
         if os.path.exists(p):
             for dir in os.listdir(p):
                 os.remove(p + "/" + dir)
@@ -77,3 +81,4 @@ def organizer(path, dest):
         emp = emp.drop(columns=['Spésialité'])
         group_orginizer(p, emp)
     os.remove(os.path.dirname(path) + "/" + "output.csv")
+    return tabs
