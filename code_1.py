@@ -9,8 +9,17 @@ from tkinter import *
 
 # emp.columns = ["Journée", "Heure", "Module", "Type", 
     # "Enseignant", "Salle", "Promotion", "Spésialité", "Groupe", "Nature"]
+
+days = {
+    "Dimanche" : "salmon",
+    "Lundi" : "cornflowerblue",
+    "Mardi" : "seagreen",
+    "Mercredi" : "slategray",
+    "jeudi" : "mediumorchid"
+}
 def has_numbers(inputString):
     return any(char.isdigit() for char in inputString)
+
 
 def group_orginizer(dest, emp):
     groupes = emp["Groupe"].unique()
@@ -31,10 +40,24 @@ def group_orginizer(dest, emp):
 
     for groupe in grp:
         df = emp.loc[(emp['Groupe'].isin(groupe))]
-        fig, ax = plt.subplots(figsize=(12,4))
+        fig, ax = plt.subplots(figsize=(14,1))
         ax.axis('tight')
         ax.axis('off')
-        the_table = ax.table(cellText=df.values,colLabels=df.columns,loc='center')
+        colors = []
+        for _, row in df.iterrows():
+            colors_in_column = []
+            for i in range(len(df.columns)):
+                colors_in_column.append(days.get(row["Journée"], "white"))
+            colors.append(colors_in_column)
+        wid = [0.025, 0.025, 0.15, 0.025, 0.06, 0.025, 0.025]
+        if len(df.columns) > 7:
+            wid.append(0.025)
+        the_table = ax.table(cellText=df.values,colLabels=df.columns,loc="center",
+                colWidths= wid, 
+                bbox=[0, 0, 1, 9],
+                cellColours = colors)
+        the_table.auto_set_font_size(False)
+        the_table.set_fontsize(10)
         pp = PdfPages(f"{dest}/groupe{groupe[0]}.pdf")
         pp.savefig(fig, bbox_inches='tight')
         pp.close()
