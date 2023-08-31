@@ -1,10 +1,5 @@
-contourpy==1.1.0
-cycler==0.11.0
-fonttools==4.40.0
-kiwisolver==1.4.4
 matplotlib==3.7.1
-numpy==1.25.0
 pandas==2.0.2
-pyparsing==3.1.0
-six==1.16.0
-tzdata==2023.3
+tabula_py==2.7.0
+tkPDFViewer==0.1
+tkPDFViewer==0.1

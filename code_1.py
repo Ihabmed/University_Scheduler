@@ -1,11 +1,8 @@
-import tkinter
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
-import matplotlib
 import tabula
 import os
-from tkinter import *
 
 # emp.columns = ["Journée", "Heure", "Module", "Type", 
     # "Enseignant", "Salle", "Promotion", "Spésialité", "Groupe", "Nature"]
