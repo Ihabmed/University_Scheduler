@@ -4,7 +4,18 @@ from tkinter import filedialog
 from code_1 import organizer
 import os
 from tkPDFViewer import tkPDFViewer as pdf
+import sys
 
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS2
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 def browse_button(v1):
     filename = filedialog.askopenfilename(filetypes=[('pdf file', '*.pdf')])
@@ -12,7 +23,8 @@ def browse_button(v1):
     v3 = pdf.ShowPdf()
     v3.img_object_li.clear()
     v1.append(v3)
-    v2 = v3.pdf_view(frame, pdf_location = filename, width = "80", height = "60")
+    wid = str(int(window.winfo_screenwidth()) // 14)
+    v2 = v3.pdf_view(frame, pdf_location = filename, width = wid, height = "60")
     v2.pack()
     notebook1.add(frame, text = os.path.basename(filename).split(".")[0])
     folder_path.set(filename)
@@ -21,6 +33,7 @@ def browse_button(v1):
 
 def convert(v1):
     folder_dest = filedialog.askdirectory()
+    wid = str(int(window.winfo_screenwidth()) // 15)
     folders = organizer(folder_path.get(), folder_dest)
     for fol in folders:
         files = os.listdir(fol)
@@ -30,7 +43,7 @@ def convert(v1):
             frame = ttk.Frame(notebook2)
             v3 = pdf.ShowPdf()
             v1.append(v3)
-            v2 = v3.pdf_view(frame, pdf_location = fol + "/" + file, width = "80", height = "60")
+            v2 = v3.pdf_view(frame, pdf_location = fol + "/" + file, width = wid, height = "60")
             v2.pack()
             notebook2.add(frame, text= os.path.basename(fol) + "_" + file)
 
@@ -47,7 +60,7 @@ window.title("University schedule")
 width= window.winfo_screenwidth()               
 height= window.winfo_screenheight()               
 window.geometry("%dx%d" % (width, height))
-window.tk.call("source", "Azure-ttk-theme-main/azure.tcl")
+window.tk.call("source", resource_path("Azure-ttk-theme-main\\azure.tcl"))
 window.tk.call("set_theme", "light")
 folder_path = tk.StringVar()
 frame = ttk.Frame(window)
