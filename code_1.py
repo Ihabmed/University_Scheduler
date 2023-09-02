@@ -3,9 +3,10 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import tabula
 import os
-
+import sys
 # emp.columns = ["Journée", "Heure", "Module", "Type", 
     # "Enseignant", "Salle", "Promotion", "Spésialité", "Groupe", "Nature"]
+
 
 days = {
     "Dimanche" : "salmon",
@@ -60,8 +61,8 @@ def group_orginizer(dest, emp):
         pp.close()
 
 def organizer(path, dest):
-    tabula.convert_into(path, os.path.dirname(path) + "/" + "output.csv", output_format="csv", pages='all')
-    emp = pd.read_csv(os.path.dirname(path) + "/" + "output.csv")
+    tabula.convert_into(path, dest + "/" + "output.csv", output_format="csv", pages='all')
+    emp = pd.read_csv(dest + "/" + "output.csv", encoding='latin-1')
     emp = emp.drop(columns=['Promotion'])
     emp = emp.drop(columns=['Nature'])
     speciality = emp["Spésialité"].unique()
@@ -87,7 +88,7 @@ def organizer(path, dest):
             else:
                 for dir in os.listdir(p):
                     os.remove(p + "/" + dir)
-            df.to_csv(f"{p}/output1.csv", sep=",",index=False, encoding='utf-8')
+            df.to_csv(f"{p}/output1.csv", sep=",",index=False, encoding='latin-1')
             group_orginizer(p, pd.read_csv(f"{p}/output1.csv"))
             os.remove(f"{p}/output1.csv")
     else:
@@ -100,5 +101,5 @@ def organizer(path, dest):
         os.mkdir(p)
         emp = emp.drop(columns=['Spésialité'])
         group_orginizer(p, emp)
-    os.remove(os.path.dirname(path) + "/" + "output.csv")
+    os.remove(dest + "/" + "output.csv")
     return tabs
