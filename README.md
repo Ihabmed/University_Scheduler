@@ -43,5 +43,7 @@ This project have an MIT license, it's free for re-use, private using and open-s
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Download Application
+
 For windows : https://www.dropbox.com/scl/fi/j99jzbw74m6g1gbqiy9m2/Universit-SchedulerSetup.exe?rlkey=0543bd71tavz9s328jvpiqij0&dl=0
+
 For linux : https://www.dropbox.com/scl/fi/yrhw286xsdlovgq096sjr/Universit-Scheduleur?rlkey=v7u9euo1x0c4hk8rj7i8rlfmj&dl=0
