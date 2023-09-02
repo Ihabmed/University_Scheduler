@@ -2,4 +2,3 @@ matplotlib==3.7.1
 pandas==2.0.2
 tabula_py==2.7.0
 tkPDFViewer==0.1
-tkPDFViewer==0.1
